@@ -1,13 +1,44 @@
-import React from "react";
-import { Link } from "react-router-dom"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import { Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 
 export default function Register() {
+  const [formInputVals, setFormInputVals] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
+  });
+
+  const submitFormValues = async (formValues) => {
+    const res = await fetch("", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formValues),
+    });
+    console.log(formValues);
+  };
+
+  const onFormInputChange = (e) => {
+    setFormInputVals({
+      ...formInputVals,
+      [e.target.name]: e.target.value,
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
+    submitFormValues(formInputVals)
+      .then((res) => {
+        console.log("Registration successful!");
+      })
+      .catch((err) => {
+        console.log("There was an error!", err);
+      });
   };
   return (
     <Container
@@ -25,6 +56,9 @@ export default function Register() {
               <div className="form-group">
                 <label for="exampleInputEmail1">First Name</label>
                 <input
+                  onChange={onFormInputChange}
+                  value={formInputVals.fname}
+                  name="fname"
                   type="text"
                   className="form-control"
                   id="exampleInputEmail1"
@@ -35,6 +69,9 @@ export default function Register() {
               <div className="form-group">
                 <label for="exampleInputEmail2">Last Name</label>
                 <input
+                  onChange={onFormInputChange}
+                  value={formInputVals.lname}
+                  name="lname"
                   type="text"
                   className="form-control"
                   id="exampleInputEmail2"
@@ -45,6 +82,9 @@ export default function Register() {
               <div className="form-group">
                 <label for="exampleInputEmail3">Email address</label>
                 <input
+                  onChange={onFormInputChange}
+                  value={formInputVals.email}
+                  name="email"
                   type="email"
                   className="form-control"
                   id="exampleInputEmail3"
@@ -55,6 +95,9 @@ export default function Register() {
               <div className="form-group">
                 <label for="exampleInputPassword1">Password</label>
                 <input
+                  onChange={onFormInputChange}
+                  value={formInputVals.password}
+                  name="password"
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
@@ -64,9 +107,9 @@ export default function Register() {
               <Button type="submit" className="btn btn-primary mt-4">
                 Register
               </Button>
-              <small id="emailHelp" className="form-text text-muted">
+              <p id="emailHelp" className="form-text text-muted">
                 Already have an account? Please Login <Link to="/">here</Link>.
-              </small>
+              </p>
             </form>
           </Jumbotron>
         </Col>
