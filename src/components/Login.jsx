@@ -5,14 +5,14 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import { Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 
-export default function Login() {
+export default function Login(props) {
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
 
   const submitFormValues = async (formValues) => {
-    const res = await fetch("", {
+    const res = await fetch("localhost://", {
         method: "POST",
         headers: {
             'Content-type': 'application/json' 
@@ -29,13 +29,15 @@ export default function Login() {
     });
   };
   const handleSubmit = (e) => {
+    
     e.preventDefault();
     submitFormValues(formValues)
       .then((res) => {
         console.log("Form successfully submited");
+        props.history.push('/home')
       })
       .catch((err) => {
-        console.log("There was an error submitting this form");
+        console.log("There was an error submitting this form", err);
       });
   };
   return (

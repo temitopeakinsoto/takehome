@@ -11,7 +11,7 @@ export default function Track(props) {
         justifyContent: "space-between",
       }}
     >
-      <h1>{track.primary_artist.name}</h1>
+      <h2>{track.primary_artist.name}</h2>
       <div
         style={{
           display: "flex",

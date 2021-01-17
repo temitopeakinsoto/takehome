@@ -14,14 +14,21 @@ export default function Register() {
   });
 
   const submitFormValues = async (formValues) => {
-    const res = await fetch("", {
+    const url = "";
+    const options = {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formValues),
-    });
-    console.log(formValues);
+    };
+
+    try {
+      const res = await fetch(url, options);
+      console.log(formValues);
+    } catch(e) {
+      
+    }
   };
 
   const onFormInputChange = (e) => {
