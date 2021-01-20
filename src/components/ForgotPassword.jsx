@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%",
+    width: "100%", 
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -33,14 +32,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register() {
+export default function ForgotPassword() {
   const classes = useStyles();
-  const [formValues, setFormValues] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    password: "",
-  });
+  const [formValues, setFormValues] = useState({ email: ""});
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -51,31 +45,37 @@ export default function Register() {
     });
   };
 
+  const handleCheckboxChange = e => {
+    const checked = e.target.checked;
+    setFormValues({
+      ...formValues,
+      rememberMe: checked,
+    });
+  }
+
   const submitFormData = async (formData) => {
     const options = {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData)
     };
 
     try {
       const res = await fetch("", options);
-    } catch (e) {
-      console.log("There was an error with this request", e);
+    } catch(e){
+      console.log("There was an error with this request", e)
     }
   };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    submitFormData(formValues)
-      .then((respond) => {
-        console.log("form successfully submitted", formValues);
-      })
-      .catch((e) => {
-        console.log("There was an error with this process", e);
-      });
+    submitFormData(formValues).then(respond => {
+      console.log("form successfully submitted", formValues);
+    }).catch(e => {
+      console.log("There was an error with this process", e)
+    });
   };
 
   return (
@@ -86,7 +86,7 @@ export default function Register() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Register
+          Sign in
         </Typography>
         <form
           onSubmit={handleFormSubmission}
@@ -99,48 +99,13 @@ export default function Register() {
             margin="normal"
             required
             fullWidth
-            id="fname"
-            label="First Name"
-            name="fname"
-            autoComplete="fname"
-            autoFocus
-          />
-          <TextField
-            onChange={handleInputChange}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="lname"
-            label="Last Name"
-            type="lname"
-            id="lname"
-            autoComplete="lname"
-          />
-          <TextField
-            onChange={handleInputChange}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="email"
-            label="email"
-            type="email"
             id="email"
+            label="Email Address"
+            name="email"
             autoComplete="email"
-          />
-          <TextField
-            onChange={handleInputChange}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
+            autoFocus
+          />          
+          
           <Button
             type="submit"
             fullWidth
@@ -148,20 +113,8 @@ export default function Register() {
             color="primary"
             className={classes.submit}
           >
-            Register
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/forgotpassword" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="/" variant="body2">
-                {"Already have an account? Please Login"}
-              </Link>
-            </Grid>
-          </Grid>
+            Submit
+          </Button>          
         </form>
       </div>
     </Container>
