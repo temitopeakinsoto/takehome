@@ -110,13 +110,13 @@ export default function ForgotPassword() {
             autoComplete="email"
             autoFocus
           />
-
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!(formValues.password === formValues.password2)}
           >
             Submit
           </Button>
