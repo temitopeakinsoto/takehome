@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   const [formValues, setFormValues] = useState({ email: "", password: "", rememberMe: false });
 
@@ -73,6 +73,7 @@ export default function SignIn() {
     e.preventDefault();
     submitFormData(formValues).then(respond => {
       console.log("form successfully submitted", formValues);
+      props.history.push('/home');
     }).catch(e => {
       console.log("There was an error with this process", e)
     });
