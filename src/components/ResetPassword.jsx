@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { submitFormData } from '../api';
+import {
+    Avatar,
+    Button,
+    CssBaseline,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    Link,
+    Grid,
+    Typography,
+    Container,
+  } from "@material-ui/core";
 
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -36,30 +40,12 @@ export default function ForgotPassword() {
   const [formValues, setFormValues] = useState({ password: "", password2: "" });
 
   const handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
     setFormValues({
       ...formValues,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
-
-  const submitFormData = async (formData) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    };
-
-    try {
-      const res = await fetch("", options);
-    } catch (e) {
-      console.log("There was an error with this request", e);
-    }
-  };
-
+ 
   const handleFormSubmission = (e) => {
     e.preventDefault();
     submitFormData(formValues)
@@ -67,7 +53,7 @@ export default function ForgotPassword() {
         console.log("form successfully submitted", formValues);
       })
       .catch((e) => {
-        console.log("There was an error with this process", e);
+        throw new Error(e.msg)
       });
   };
 

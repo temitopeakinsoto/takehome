@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+import { submitFormData } from "../api";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Typography,
+  Container,
+} from "@material-ui/core";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-  const [formValues, setFormValues] = useState({ email: "", password: "", rememberMe: false });
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -45,38 +53,24 @@ export default function SignIn(props) {
     });
   };
 
-  const handleCheckboxChange = e => {
+  const handleCheckboxChange = (e) => {
     const checked = e.target.checked;
     setFormValues({
       ...formValues,
       rememberMe: checked,
     });
-  }
-
-  const submitFormData = async (formData) => {
-    const options = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formValues)
-    };
-
-    try {
-      const res = await fetch("", options);
-    } catch(e){
-      console.log("There was an error with this request", e)
-    }
   };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    submitFormData(formValues).then(respond => {
-      console.log("form successfully submitted", formValues);
-      props.history.push('/home');
-    }).catch(e => {
-      console.log("There was an error with this process", e)
-    });
+    submitFormData(formValues)
+      .then((respond) => {
+        console.log("form successfully submitted", formValues);
+        props.history.push("/home");
+      })
+      .catch((e) => {
+        console.log("There was an error with this process", e);
+      });
   };
 
   return (
