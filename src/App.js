@@ -1,10 +1,7 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Dashboard from "./components/Dashboard";
-import ForgotPassword from "./components/ForgotPassword"
-import ResetPassword from "./components/ResetPassword"
+import { Login, Register, Dashboard, ForgotPassword, ResetPassword } from "./components";
+
 
 import "./App.css";
 
