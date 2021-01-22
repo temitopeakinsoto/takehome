@@ -7,15 +7,18 @@ import Row from "react-bootstrap/Row";
 import headphone from "../images/headphone.jpg";
 import Track from "../components/Track";
 import nophoto from "../images/nophoto.png";
+import Search from "../components/Search";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Nav from "./Nav";
 
 export default function Dashboard() {
   const [songs, setSongs] = useState([]);
   const [likes, setLikes] = useState(0);
+  const [pageLoading, setPageLoading] = useState(false);
   const updateLikes = (e) => {
     if (likes > 0) {
-        setLikes(prev => prev - 1);
+      setLikes((prev) => prev - 1);
     } else {
       setLikes((prev) => prev + 1);
     }
@@ -31,6 +34,7 @@ export default function Dashboard() {
       });
       const fetchedSongs = await res.json();
       setSongs(fetchedSongs.response.songs);
+      setPageLoading(true);
     };
     fetchData();
   }, []);
@@ -66,15 +70,20 @@ export default function Dashboard() {
             <Container style={{ height: "50vh" }}>
               <Jumbotron>
                 <h1>Welcome to the dashboard</h1>
+                <Search songs={songs} setSongs={setSongs} />
               </Jumbotron>
             </Container>
           </div>
-          <div style={{}}>
-            <Container>
-              {songs.map((song) => (
-                <Track updateLikes={updateLikes} likes={likes} track={song} />
-              ))}
-            </Container>
+          <div style={{ textAlign: "center" }}>
+            {pageLoading ? (
+              <Container>
+                {songs.map((song) => (
+                  <Track updateLikes={updateLikes} likes={likes} track={song} />
+                ))}
+              </Container>
+            ) : (
+              <CircularProgress />
+            )}
           </div>
         </Col>
       </Row>
