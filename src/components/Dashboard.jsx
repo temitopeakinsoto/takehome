@@ -67,9 +67,9 @@ export default function Dashboard() {
             style={{ marginBottom: "3rem", boxShadow: "0 2px 3px lightgray" }}
           >
             <Nav />
-            <Container style={{ height: "50vh" }}>
+            <Container style={{ height: "25vh" }}>
               <Jumbotron>
-                <h1>Welcome to the dashboard</h1>
+                {/* <h1>PlayerR</h1> */}
                 <Search songs={songs} setSongs={setSongs} />
               </Jumbotron>
             </Container>
